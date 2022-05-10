@@ -7,3 +7,4 @@ containers
 pydantic
 python-dotenv
 psycopg2
+requests

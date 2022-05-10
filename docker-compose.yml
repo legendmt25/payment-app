@@ -9,7 +9,6 @@ services:
       - ./:/app
     env_file:
       - .env.local
-      - .env
     ports:
       - 8005:5000
     depends_on:

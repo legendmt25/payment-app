@@ -24,9 +24,10 @@ class TransactionService:
     def findAllResourceTransactions(self) -> Iterable[models.ResourceTransaction]:
         return self.transactionRepository.findAllResourceTransactions()
 
-    def createInvoice(self, userId: int, shoppingCartId: int, serviceIds: Iterable[int], resourceIds: Iterable[int]):
+    def createInvoice(self, transactionId: int):
         #TODO: Generate an invoice
-        return None
+        tx = self.findById(transactionId)
+        #returns stream bytes
     
     def findById(self, id: int) -> models.Transaction:
         return self.transactionRepository.findById(id)
@@ -38,17 +39,13 @@ class TransactionService:
         return self.transactionRepository.findByUserId(userId)
 
     def pay(self, tx: any):
-        try:
-            if type(tx) is MarketTransactionCreate:
-                self.createMarket(tx)
-            elif type(tx) is ServiceTransactionCreate:
-                self.createService(tx)
-            elif type(tx) is ResourceTransactionCreate:
-                self.createResource(tx)
-        except:
-            raise Exception("Can't create transaction")
-        finally:
-            return 200 
+        if type(tx) is MarketTransactionCreate:
+            self.createMarket(tx)
+        elif type(tx) is ServiceTransactionCreate:
+            self.createService(tx)
+        elif type(tx) is ResourceTransactionCreate:
+            self.createResource(tx)
+        return 200
 
     def createBase(self, tx: TransactionCreate) -> models.Transaction:
         return self.transactionRepository.create(
