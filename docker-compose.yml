@@ -1,0 +1,31 @@
+version: '3'
+services:
+  payment-app:
+    container_name: payment-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    env_file:
+      - .env.local
+      - .env
+    ports:
+      - 8005:5000
+    depends_on:
+      - payment-app-db
+    restart: on-failure
+
+  payment-app-db:
+    container_name: payment-app-db
+    image: postgres
+    environment:
+      - POSTGRES_USER=payment-app
+      - POSTGRES_PASSWORD=payment-app
+      - POSTGRES_DB=payment-app
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:

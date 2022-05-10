@@ -11,10 +11,10 @@ try:
     db.create_database()
 except:
     print("Can't connect to database")
-    exit()
+    exit(1)
 app = FastAPI()
 app.container = container
 app.include_router(router)
 
 if __name__ == '__main__':
-    uvicorn.run(app, port=container.config.PORT(), host='localhost')
+    uvicorn.run(app, port=container.config.PORT())
