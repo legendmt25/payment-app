@@ -8,3 +8,4 @@ pydantic
 python-dotenv
 psycopg2
 requests
+python-docx

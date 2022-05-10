@@ -61,9 +61,11 @@ def createInvoice(
     ):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Forbidden access to this endpoint")
         
-    return fastapi.responses.StreamingResponse(
+    return fastapi.responses.StreamingResponse(    
         transactionService.createInvoice(transactionId), 
-        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document") 
+        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        headers={ "Content-Disposition": "attachment;filename=" + str(transactionId) + ".docx" }
+    )
 
 @router.get("/api/v1/transactions")
 @inject
