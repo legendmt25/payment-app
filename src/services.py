@@ -94,7 +94,7 @@ class TransactionService:
                 createdAt = date.today(), 
                 price = tx.price, 
                 status = TransactionStatus.PENDING,
-                petId = tx.petId,
+                # petId = tx.petId,
                 serviceIds = [Transactions_Resources_Services(data_id = serviceId) for serviceId in tx.serviceIds]
             )
         )
@@ -107,7 +107,7 @@ class TransactionService:
                 createdAt = date.today(), 
                 price = tx.price, 
                 status = TransactionStatus.PENDING,
-                petId = tx.petId,
+                # petId = tx.petId,
                 resourceIds = [Transactions_Resources_Services(data_id = resourceId) for resourceId in tx.resourceIds]
             )
         )

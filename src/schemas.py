@@ -13,7 +13,7 @@ class Transaction(Base):
 
     id = Column("id", Integer, primary_key = True, index = True)
     type = Column(String(50))
-    userId = Column(Integer)
+    userId = Column(String(50))
     createdAt = Column(Date)
     price = Column(Numeric)
     status = Column(Enum(TransactionStatus))

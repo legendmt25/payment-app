@@ -5,9 +5,9 @@ Revises:
 Create Date: 2022-04-26 12:30:55.742496
 
 """
-from enum import Enum
 from alembic import op
 import sqlalchemy as sa
+from src.enums import TransactionStatus
 
 
 # revision identifiers, used by Alembic.
@@ -21,10 +21,10 @@ def upgrade():
     op.create_table(
         "transactions",
         sa.Column("id", sa.Integer, primary_key = True, index = True),
-        sa.Column("userId", sa.Integer),
+        sa.Column("userId", sa.String(50)),
         sa.Column("createdAt", sa.Date),
         sa.Column("price", sa.Numeric),
-        sa.Column("status", sa.Enum(Enum)),
+        sa.Column("status", sa.Enum(TransactionStatus)),
     )
 
 

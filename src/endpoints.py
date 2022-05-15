@@ -31,15 +31,40 @@ def pay(
     ):
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Forbidden access to this endpoint")
     status = 0
+
+    userId = userService.getUserId(Authorization)
     try:
         if(body.txBase != None):
-            status = transactionService.pay(body.txBase)
+            status = transactionService.pay(
+                TransactionCreate(
+                    price=body.txBase.price, 
+                    userId=userId
+                )
+            )
         elif(body.txMarket != None):
-            status = transactionService.pay(body.txMarket)
+            status = transactionService.pay(
+                MarketTransactionCreate(
+                    price=body.txMarket.price, 
+                    userId=userId, 
+                    shoppingCartId=body.txMarket.shoppingCartId
+                )
+            )
         elif(body.txService != None):
-            status = transactionService.pay(body.txService)
+            status = transactionService.pay(
+                ServiceTransactionCreate(
+                    price=body.txService.price, 
+                    userId=userId,
+                    serviceIds=body.txService.serviceIds
+                )
+            )
         elif(body.txResource != None):
-            status = transactionService.pay(body.txResource)
+            status = transactionService.pay(
+                ResourceTransactionCreate(
+                    price=body.txResource.price, 
+                    userId=userId,
+                    resourceIds=body.txResource.resourceIds
+                )
+            )
     except:
         raise HTTPException(status.HTTP_409_CONFLICT, "Cound't create transactions")
     finally:

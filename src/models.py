@@ -5,32 +5,45 @@ from pydantic import BaseModel
 from src.enums import TransactionStatus
 
 class TransactionBase(BaseModel):
-    userId: int
     price: float
 
 class MarketTransactionBase(TransactionBase):
     shoppingCartId: int
 
 class ServiceTransactionBase(TransactionBase):
-    petId: int
+    # petId: int
     serviceIds: list[int]
 
 class ResourceTransactionBase(TransactionBase):
-    petId: int
+    # petId: int
     resourceIds: list[int]
 
-class TransactionCreate(TransactionBase):
+class TransactionCreatePartial(TransactionBase):
     pass
-class MarketTransactionCreate(MarketTransactionBase):
+class MarketTransactionCreatePartial(MarketTransactionBase):
     pass
-class ServiceTransactionCreate(ServiceTransactionBase):
+class ServiceTransactionCreatePartial(ServiceTransactionBase):
     pass
-class ResourceTransactionCreate(ResourceTransactionBase):
+class ResourceTransactionCreatePartial(ResourceTransactionBase):
     pass
+
+class TransactionCreate(TransactionCreatePartial):
+    userId: str
+
+class MarketTransactionCreate(MarketTransactionCreatePartial):
+    userId: str
+
+class ServiceTransactionCreate(ServiceTransactionCreatePartial):
+    userId: str
+
+class ResourceTransactionCreate(ResourceTransactionCreatePartial):
+    userId: str
+
 
 class Transaction(TransactionBase):
     id: int
     type: str
+    userId: str
     createdAt: date
     status: TransactionStatus
 
@@ -63,7 +76,7 @@ class DailyReport(BaseModel):
 
 
 class PayRequestBody(BaseModel):
-    txBase: Optional[TransactionCreate] = None
-    txMarket: Optional[MarketTransactionCreate] = None
-    txService: Optional[ServiceTransactionCreate] = None
-    txResource: Optional[ResourceTransactionCreate] = None
+    txBase: Optional[TransactionCreatePartial] = None
+    txMarket: Optional[MarketTransactionCreatePartial] = None
+    txService: Optional[ServiceTransactionCreatePartial] = None
+    txResource: Optional[ResourceTransactionCreatePartial] = None
